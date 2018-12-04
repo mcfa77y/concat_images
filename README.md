@@ -1,4 +1,5 @@
-# concat_images
+# Image manipulator
+uses Pillow (python image manipulator library) to merge images horizontall and add labels
 
 
 ### Installation
