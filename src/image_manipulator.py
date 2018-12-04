@@ -1,31 +1,16 @@
-import os
+from os import path
 from functools import reduce
 # from wand.image import Image
 # from wand.sequence import Sequence
 from PIL import Image, ImageColor, ImageDraw, ImageFont
-BASE_DIR = "."
 
-FOLDER0 = BASE_DIR + "/input/SP20299/Overlay"
-FOLDER1 = BASE_DIR + "/input/SP20299-LPS/SP20299-LPS-Overlay"
-FOLDER2 = BASE_DIR + "/input/LPS-SP20299/LPS-SP20299-Overlay"
 
-OUTPUT_DIR = BASE_DIR + "/output"
+BASE_DIR = path.join(path.dirname(__file__), '..')
 
-TITLES_URI = BASE_DIR + "/input/names.txt"
 FONT_URI = BASE_DIR + "/input/Arial_Narrow.ttf"
 
-
-def buff_number(number):
-    result = str(number)
-    if (number < 10):
-        result = "00" + str(number)
-    elif (number < 99):
-        result = "0" + str(number)
-    return result
-
-
-def create_name_array():
-    file = open(TITLES_URI, "r")
+def create_name_array(names_uri):
+    file = open(names_uri, "r")
     name_array = []
     for name in file.readlines():
         name_array.append(name.strip('\n'))
@@ -73,8 +58,8 @@ def merge_images_PIL(image_uri_array, output_image_uri):
 def label_image_PIL(label, image_uri, output_image_uri=None):        
     
     with Image.open(image_uri) as img:
-        label_height = 100
-        font_size = 100
+        font_size = 120
+        label_height = font_size + 30
 
         # make a blank image for the text
         label_img = Image.new('RGBA', (img.width, label_height), ImageColor.getrgb('white'))
@@ -113,30 +98,3 @@ def label_image(image_uri, output_image_uri, label):
     os.system(add_label_command)
 
 
-def main():
-    
-    name_array = create_name_array()
-
-    for x in range(1, 4):
-        print(buff_number(x))
-        index = buff_number(x)
-        img0 = f'{FOLDER0}{index}.jpg'
-        img1 = f'{FOLDER1}{index}.jpg'
-        img2 = f'{FOLDER2}{index}.jpg'
-        
-        img0_out = f'{BASE_DIR}/output/Overlay{index}_labeled.jpg'
-        img1_out = f'{BASE_DIR}/output/SP20299-LPS-Overlay{index}_labeled.jpg'
-        img2_out = f'{BASE_DIR}/output/LPS-SP20299-Overlay{index}_labeled.jpg'
-
-        output_image_uri = f'{BASE_DIR}/output/DrugvDrugLPSvLPSDrug_{index}.jpg'
-
-        label_image_PIL(name_array[0], img0, img0_out)
-        label_image_PIL(name_array[1], img1, img1_out)
-        label_image_PIL(name_array[2], img2, img2_out)
-        # label_image(img0, img0_out, name_array[x-1])
-        # label_image(img1, img1_out , name_array[x-1])
-        # label_image(img2, img2_out , name_array[x-1])
-
-        merge_images_PIL([img0_out, img1_out, img2_out], output_image_uri)
-
-main()
