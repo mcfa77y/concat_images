@@ -78,9 +78,9 @@ def label_image_PIL(label, image_uri, output_image_uri=None):
         label_draw = ImageDraw.Draw(label_img)
         label_draw.text((10,10),label, font=fnt)
 
-        new_img = Image.composite('RGB', (img.width, img.height + label_img.height), ImageColor.getrgb('white'))
+        new_img = Image.new('RGB', (img.width, img.height + label_img.height), ImageColor.getrgb('white'))
         new_img.paste(img)
-        new_img.paste(label, (0, img.height))
+        new_img.paste(label_img, (0, img.height))
         if (output_image_uri == None):
             new_img.save(image_uri)
         else:
@@ -118,9 +118,9 @@ def main():
 
         output_image_uri = f'{BASE_DIR}/output/DrugvDrugLPSvLPSDrug_{index}.jpg'
 
-        label_image_PIL(name_array[x-1], img0)
-        label_image_PIL(name_array[x], img1)
-        label_image_PIL(name_array[x+1], img2)
+        label_image_PIL(name_array[0], img0, img0_out)
+        label_image_PIL(name_array[1], img1, img1_out)
+        label_image_PIL(name_array[2], img2, img2_out)
         # label_image(img0, img0_out, name_array[x-1])
         # label_image(img1, img1_out , name_array[x-1])
         # label_image(img2, img2_out , name_array[x-1])
