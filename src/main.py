@@ -1,4 +1,4 @@
-from image_manipulator import merge_images_PIL, create_name_array, label_image_PIL
+from image_manipulator import merge_images_PIL, create_name_array, label_image_PIL, label_image_title_PIL
 from utils import buff_number, copy_files
 from os import path, open
 
@@ -29,16 +29,16 @@ def merge_label():
         img1_out = f'{BASE_DIR}/output/SP20299-LPS-Overlay{index}_labeled.jpg'
         img2_out = f'{BASE_DIR}/output/LPS-SP20299-Overlay{index}_labeled.jpg'
 
-        label_image_PIL(name_array[0], img0, img0_out)
-        label_image_PIL(name_array[1], img1, img1_out)
-        label_image_PIL(name_array[2], img2, img2_out)
+        label_image_title_PIL(name_array[0], img0, img0_out)
+        label_image_title_PIL(name_array[1], img1, img1_out)
+        label_image_title_PIL(name_array[2], img2, img2_out)
        
         output_image_uri = f'{BASE_DIR}/output/DrugvDrugLPSvLPSDrug_{index}.jpg'
         merge_images_PIL([img0_out, img1_out, img2_out], output_image_uri)
+        label_image_PIL("duck brothers", output_image_uri)
 
-
-def main():
-        # Tubulin_001.jpg
+def copy_things():
+         # Tubulin_001.jpg
         prefix = "Tubulin_"
         ext = ".jpg"
         src = "/home/joe/Desktop/ImageMappingData/Tubulin"
@@ -48,6 +48,8 @@ def main():
         multiple = 24
 
         copy_files(prefix, ext, src, dest, start, end, multiple) 
+def main():
+       merge_label()
            
 
 main()

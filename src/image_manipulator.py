@@ -81,6 +81,35 @@ def label_image_PIL(label, image_uri, output_image_uri=None):
         else:
             new_img.save(output_image_uri)
 
+def label_image_title_PIL(label, image_uri, output_image_uri=None):        
+    
+    with Image.open(image_uri) as img:
+        font_size = 120
+        buffer = 30
+        label_height = font_size + buffer
+
+        # make a blank image for the text
+        label_img = Image.new('RGBA', (img.width, label_height), ImageColor.getrgb('white'))
+
+        # get a font
+        fnt = ImageFont.truetype(FONT_URI, font_size)
+        # get a drawing context
+        label_draw = ImageDraw.Draw(label_img)
+        label_draw.text((10,10),label, font=fnt,fill=(0,0,255,128))
+
+        # image holder 
+        new_img = Image.new('RGB', (img.width, img.height + label_img.height), ImageColor.getrgb('white'))
+        # paste label in image holder
+        new_img.paste(label_img)
+        # paste image in image holder
+        new_img.paste(img, (0, label_img.height))
+
+        # save image
+        if (output_image_uri == None):
+            new_img.save(image_uri)
+        else:
+            new_img.save(output_image_uri)
+
 
 def label_image(image_uri, output_image_uri, label):
     add_label_command = f'convert {image_uri} \
