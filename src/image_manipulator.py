@@ -1,7 +1,5 @@
 from os import path
 from functools import reduce
-# from wand.image import Image
-# from wand.sequence import Sequence
 from PIL import Image, ImageColor, ImageDraw, ImageFont
 
 

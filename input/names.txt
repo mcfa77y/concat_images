@@ -1,3 +1,3 @@
-huey
-duey
-louie
+huey, wears blue
+duey, wears green
+louie, wears red
