@@ -43,7 +43,7 @@ def merge_label():
 
 def merge_label_parallel():
     with Pool() as p:
-        print(p.map(merge_label_fn, range(1, 4)))
+        p.map(merge_label_fn, range(1, 4))
 
 
 def copy_things():
