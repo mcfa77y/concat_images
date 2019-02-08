@@ -3,6 +3,7 @@ from utils import buff_number, copy_files
 from os import path, open
 from multiprocessing import Pool
 
+
 BASE_DIR = path.join(path.dirname(__file__), '..')
 
 FOLDER0 = BASE_DIR + "/input/SP20299/Overlay"
@@ -11,6 +12,7 @@ FOLDER2 = BASE_DIR + "/input/LPS-SP20299/LPS-SP20299-Overlay"
 
 OUTPUT_DIR = BASE_DIR + "/output"
 TITLES_URI = BASE_DIR + "/input/names.txt"
+name_array = create_name_array(TITLES_URI)
 
 NAME_ARRAY = create_name_array(TITLES_URI)
 
