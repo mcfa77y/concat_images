@@ -14,7 +14,6 @@ OUTPUT_DIR = BASE_DIR + "/output"
 TITLES_URI = BASE_DIR + "/input/names.txt"
 name_array = create_name_array(TITLES_URI)
 
-
 def merge_label_fn(x):
     print(buff_number(x))
     index = buff_number(x)
