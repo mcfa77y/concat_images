@@ -14,13 +14,9 @@ OUTPUT_DIR = BASE_DIR + "/output"
 TITLES_URI = BASE_DIR + "/input/names.txt"
 name_array = create_name_array(TITLES_URI)
 
-NAME_ARRAY = create_name_array(TITLES_URI)
-
-def merge_label():
-        
-    for x in range(1, 4):
-        print(buff_number(x))
-        index = buff_number(x)
+def merge_label_fn(x):
+    print(buff_number(x))
+    index = buff_number(x)
 
         img0 = f'{FOLDER0}{index}.jpg'
         img1 = f'{FOLDER1}{index}.jpg'
