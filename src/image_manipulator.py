@@ -8,8 +8,8 @@ FONT_URI = BASE_DIR + "/input/Arial_Narrow.ttf"
 # https://en.wikipedia.org/wiki/Web_colors
 # https://coolors.co/4392f1-008080-ffffff-262626-dc493a color palet generator
 
-# BACKGROUND_COLOR = ImageColor.getrgb('#262626')
-BACKGROUND_COLOR = ImageColor.getrgb('black')
+BACKGROUND_COLOR = ImageColor.getrgb('#262626')
+# BACKGROUND_COLOR = ImageColor.getrgb('black')
 TEXT_COLOR = ImageColor.getrgb('teal')
 
 def create_name_array(names_uri):
