@@ -4,6 +4,8 @@ from PIL import Image, ImageColor, ImageDraw, ImageFont
 
 BASE_DIR = path.join(path.dirname(__file__), '..')
 FONT_URI = BASE_DIR + "/input/Arial_Narrow.ttf"
+BACKGROUND_COLOR = ImageColor.getrgb('black')
+TEXT_COLOR = ImageColor.getrgb('teal')
 
 def create_name_array(names_uri):
     file = open(names_uri, "r")
@@ -29,7 +31,7 @@ def merge_images_PIL(image_uri_array, output_image_uri):
     max_height = max(heights) + 2 * y_offset
 
     # create new image to hold merge images
-    new_img = Image.new('RGB', (total_width, max_height), ImageColor.getrgb('white'))
+    new_img = Image.new('RGB', (total_width, max_height), BACKGROUND_COLOR)
 
     # have to get images again because they close after initial use
     images = map(Image.open, image_uri_array)
@@ -39,12 +41,39 @@ def merge_images_PIL(image_uri_array, output_image_uri):
 
     new_img.save(output_image_uri)
 
-def create_label(label_text, label_width, font_size=120, font_color=ImageColor.getrgb('black'), x_offset=10, y_offset=10):
+      
+def stack_images_PIL(image_uri_array, output_image_uri):  
+    # space on left and right of merged images
+    x_offset = 0
+    # space on top and below merged images
+    y_offset = 0
+    # space between images
+    y_between = 10
+
+    # open images and collect heights and widths to calc max width
+    images = map(Image.open, image_uri_array)
+    widths, heights = zip(*(i.size for i in images))
+    
+    total_height = sum(heights) + (len(image_uri_array)) * x_offset
+    max_width = max(widths) + 2 * y_offset
+
+    # create new image to hold merge images
+    new_im = Image.new('RGB', (max_width, total_height), BACKGROUND_COLOR)
+
+    # have to get images again because they close after initial use
+    images = map(Image.open, image_uri_array)
+    for im in images:
+        new_im.paste(im, (x_offset, y_offset))
+        y_offset += im.height + y_between
+
+    new_im.save(output_image_uri)
+
+def create_label(label_text, label_width, font_size=120, font_color=TEXT_COLOR, x_offset=10, y_offset=10):
   buffer = 30
   label_height = font_size + buffer
 
   # make a blank image for the text
-  label_img = Image.new('RGBA', (label_width, label_height), ImageColor.getrgb('white'))
+  label_img = Image.new('RGBA', (label_width, label_height), TEXT_COLOR)
 
   # get a font
   fnt = ImageFont.truetype(FONT_URI, font_size)
@@ -58,7 +87,7 @@ def label_image_PIL(label, image_uri, output_image_uri=None):
         label_img = create_label(label, img.width)
 
         # image holder
-        new_img = Image.new('RGB', (img.width, img.height + label_img.height), ImageColor.getrgb('white'))
+        new_img = Image.new('RGB', (img.width, img.height + label_img.height), BACKGROUND_COLOR)
         # paste image in image holder
         new_img.paste(img)
         # paste label in image holder
@@ -75,7 +104,7 @@ def label_image_title_PIL(label, image_uri, output_image_uri=None):
         label_img = create_label(label, img.width)
 
         # image holder
-        new_img = Image.new('RGB', (img.width, img.height + label_img.height), ImageColor.getrgb('white'))
+        new_img = Image.new('RGB', (img.width, img.height + label_img.height), BACKGROUND_COLOR)
         # paste label in image holder
         new_img.paste(label_img)
         # paste image in image holder

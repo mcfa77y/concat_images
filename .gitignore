@@ -106,3 +106,13 @@ bin
 output
 
 include/
+
+\.DS_Store
+
+input_2/190314_RAW_SP20299_LPS_PerkinElmer_2/
+
+input_2/190314_RAW_SP20299_PerkinElmer_2/
+
+input/190314_RAW_SP20299_LPS_PE_exp2/
+
+*.jpg
