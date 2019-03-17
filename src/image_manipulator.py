@@ -4,6 +4,11 @@ from PIL import Image, ImageColor, ImageDraw, ImageFont
 
 BASE_DIR = path.join(path.dirname(__file__), '..')
 FONT_URI = BASE_DIR + "/input/Arial_Narrow.ttf"
+
+# https://en.wikipedia.org/wiki/Web_colors
+# https://coolors.co/4392f1-008080-ffffff-262626-dc493a color palet generator
+
+# BACKGROUND_COLOR = ImageColor.getrgb('#262626')
 BACKGROUND_COLOR = ImageColor.getrgb('black')
 TEXT_COLOR = ImageColor.getrgb('teal')
 
@@ -73,7 +78,7 @@ def create_label(label_text, label_width, font_size=120, font_color=TEXT_COLOR, 
   label_height = font_size + buffer
 
   # make a blank image for the text
-  label_img = Image.new('RGBA', (label_width, label_height), TEXT_COLOR)
+  label_img = Image.new('RGBA', (label_width, label_height), BACKGROUND_COLOR)
 
   # get a font
   fnt = ImageFont.truetype(FONT_URI, font_size)

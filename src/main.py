@@ -6,11 +6,11 @@ from multiprocessing import Pool
 
 BASE_DIR = path.join(path.dirname(__file__), '..')
 
-FOLDER0 = BASE_DIR + "/input/SP20299/Overlay"
-FOLDER1 = BASE_DIR + "/input/SP20299-LPS/SP20299-LPS-Overlay"
-FOLDER2 = BASE_DIR + "/input/LPS-SP20299/LPS-SP20299-Overlay"
+FOLDER0 = BASE_DIR + "/input/RAW_SP20299"
+FOLDER1 = BASE_DIR + "/input/RAW_SP20299_LPS"
+FOLDER2 = BASE_DIR + "/input/RAW_LPS_SP20299"
 
-OUTPUT_DIR = BASE_DIR + "/output"
+OUTPUT_DIR = BASE_DIR + "/output_RAW"
 TITLES_URI = BASE_DIR + "/input/names.txt"
 name_array = create_name_array(TITLES_URI)
 
@@ -22,15 +22,15 @@ def merge_label_fn(x):
         img1 = f'{FOLDER1}{index}.jpg'
         img2 = f'{FOLDER2}{index}.jpg'
 
-        img0_out = f'{BASE_DIR}/output/Overlay{index}_labeled.jpg'
-        img1_out = f'{BASE_DIR}/output/SP20299-LPS-Overlay{index}_labeled.jpg'
-        img2_out = f'{BASE_DIR}/output/LPS-SP20299-Overlay{index}_labeled.jpg'
+        img0_out = f'{BASE_DIR}/output_RAW/RAW_SP20299_Overlay{index}_labeled.jpg'
+        img1_out = f'{BASE_DIR}/output_RAW/RAW_SP20299_LPS_Overlay{index}_labeled.jpg'
+        img2_out = f'{BASE_DIR}/output_RAW/RAW_LPS_SP20299_Overlay{index}_labeled.jpg'
 
         label_image_title_PIL("Drug", img0, img0_out)
         label_image_title_PIL("Drug-LPS", img1, img1_out)
         label_image_title_PIL("LPS-Drug", img2, img2_out)
 
-        output_image_uri = f'{BASE_DIR}/output/DrugvDrugLPSvLPSDrug_{index}.jpg'
+        output_image_uri = f'{BASE_DIR}/output_RAW/RAWDrugvDrugLPSvLPSDrug_{index}.jpg'
         merge_images_PIL([img0_out, img1_out, img2_out], output_image_uri)
         label_image_PIL(NAME_ARRAY[x-1], output_image_uri)
 
@@ -42,15 +42,15 @@ def merge_label_fn(x):
         img1 = f'{FOLDER1}{index}.jpg'
         img2 = f'{FOLDER2}{index}.jpg'
 
-        img0_out = f'{BASE_DIR}/output/Overlay{index}_labeled.jpg'
-        img1_out = f'{BASE_DIR}/output/SP20299-LPS-Overlay{index}_labeled.jpg'
-        img2_out = f'{BASE_DIR}/output/LPS-SP20299-Overlay{index}_labeled.jpg'
+        img0_out = f'{BASE_DIR}/output_RAW/RAW_SP20299{index}_labeled.jpg'
+        img1_out = f'{BASE_DIR}/output_RAW/RAW_SP20299_LPS_Overlay{index}_labeled.jpg'
+        img2_out = f'{BASE_DIR}/output_RAW/RAW_LPS_SP20299_Overlay{index}_labeled.jpg'
 
         label_image_title_PIL("Drug", img0, img0_out)
         label_image_title_PIL("Drug-LPS", img1, img1_out)
         label_image_title_PIL("LPS-Drug", img2, img2_out)
 
-        output_image_uri = f'{BASE_DIR}/output/DrugvDrugLPSvLPSDrug_{index}.jpg'
+        output_image_uri = f'{BASE_DIR}/output_RAW/RAWDrugvDrugLPSvLPSDrug_{index}.jpg'
         merge_images_PIL([img0_out, img1_out, img2_out], output_image_uri)
         label_image_PIL(NAME_ARRAY[x-1], output_image_uri)
 

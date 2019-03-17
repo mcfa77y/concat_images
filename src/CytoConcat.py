@@ -1,5 +1,5 @@
-from image_manipulator import merge_images_PIL, create_name_array, label_image_PIL, label_image_title_PIL
-from utils import buff_number, copy_files
+from image_manipulator import merge_images_PIL, create_name_array, label_image_PIL, label_image_title_PIL, stack_images_PIL
+from utils import buff_number, copy_files, clean_up_files
 from os import path, open
 from multiprocessing import Pool
 
@@ -17,34 +17,6 @@ TITLES_URI = BASE_DIR + "/input/SP20299_names.txt"
 name_array = create_name_array(TITLES_URI)
 
 NAME_ARRAY = create_name_array(TITLES_URI)
-
-# def merge_label():
-        
-#     for x in range(1, 4):
-#         print(buff_number(x))
-#         index = buff_number(x)
-
-#         img0 = f'{FOLDER0}{index}.jpg'
-#         img1 = f'{FOLDER1}{index}.jpg'
-#         img2 = f'{FOLDER2}{index}.jpg'
-#         img3 = f'{FOLDER3}{index}.jpg'
-#         img4 = f'{FOLDER4}{index}.jpg'
-
-#         img0_out = f'{BASE_DIR}/output_PE_Exp2_Cyto/190314_RAW_SP20199_Cyto_Nuclei_{index}_labeled.jpg'
-#         img1_out = f'{BASE_DIR}/output_PE_Exp2_Cyto/190314_RAW_SP20299_Actin_{index}_labeled.jpg'
-#         img2_out = f'{BASE_DIR}/output_PE_Exp2_Cyto/190314_RAW_SP20299_Tubulin_{index}_labeled.jpg'
-#         img3_out = f'{BASE_DIR}/output_PE_Exp2_Cyto/190314_RAW_SP20299_ER_{index}_labeled.jpg'
-#         img4_out = f'{BASE_DIR}/output_PE_Exp2_Cyto/190314_RAW_SP20299_Cyto_Overlay_{index}_labeled.jpg'
-
-#         label_image_title_PIL("Nuclei", img0, img0_out)
-#         label_image_title_PIL("Actin", img1, img1_out)
-#         label_image_title_PIL("Tubulin", img2, img2_out)
-#         label_image_title_PIL("ER", img3, img3_out)
-#         label_image_title_PIL("Overlay", img4, img4_out)
-
-#         output_image_uri = f'{BASE_DIR}/output_PE_Exp2_Cyto/Cyto_Concat_{index}.jpg'
-#         merge_images_PIL([img0_out, img1_out, img2_out, img3_out, img4_out], output_image_uri)
-#         label_image_PIL(NAME_ARRAY[x-1], output_image_uri)
 
 def merge_label_fn(x):
         print(buff_number(x))
@@ -69,11 +41,13 @@ def merge_label_fn(x):
         label_image_title_PIL("Overlay", img4, img4_out)
 
         output_image_uri = f'{BASE_DIR}/output_PE_Exp2_Cyto/Cyto_Concat_{index}.jpg'
-        merge_images_PIL([img0_out, img1_out, img2_out, img3_out, img4_out], output_image_uri)
+        stack_images_PIL([img0_out, img1_out, img2_out, img3_out, img4_out], output_image_uri)
+        clean_up_files([img0_out, img1_out, img2_out, img3_out, img4_out])
         label_image_PIL(NAME_ARRAY[x-1], output_image_uri)
 
 def merge_label_parallel():
-    final_img_index_minus_one = 385
+    final_img_index_minus_one = 2
+#     final_img_index_minus_one = 385
     with Pool() as p:
         p.map(merge_label_fn, range(1, final_img_index_minus_one))
 
