@@ -116,3 +116,19 @@ input_2/190314_RAW_SP20299_PerkinElmer_2/
 input/190314_RAW_SP20299_LPS_PE_exp2/
 
 *.jpg
+
+*.jpg
+
+input_2/190314_RAW_SP20299_LPS_PerkinElmer_2/Cyto/tiff/
+
+input_2/190314_RAW_SP20299_PerkinElmer_2/Cyto/tiff/
+
+input/SP20299-LPS/
+
+input/RAW_LPS_SP20299/
+
+input/SP20299_Metadata\.csv
+
+input/SP20299_names\.txt
+
+input/
